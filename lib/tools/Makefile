@@ -9,15 +9,19 @@ CC	=	gcc
 
 CFLAGS	=	-Wall -Wextra -W -I ../../include/
 
-SRC	=	my_getnbr.c	\
-		my_putstr.c	\
-		my_putchar.c	\
-		my_putstr.c	\
-		my_put_nbr.c
+SRC	=	my_strlen.c		\
+		my_putchar.c		\
+		my_getnbr.c		\
+		my_strcpy.c		\
+		my_str_isnum.c		\
+		my_strcmp.c		\
+		my_putstr.c		\
+		my_str_to_word_array.c	\
+		my_strcat.c
 
 OBJ	=	$(SRC:.c=.o)
 
-NAME	=	../libtools.a
+NAME	=	libtools.a
 
 all:	$(NAME)
 
