@@ -57,5 +57,7 @@ int main(int ac, char **av, char **new_env)
 			break;
 	}
 	free_shell(shell, nenv);
+	if (shell->status == 4)
+		return (0);
 	return (shell->status);
 }
