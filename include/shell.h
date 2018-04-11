@@ -10,6 +10,7 @@
 	#include "main.h"
 	typedef struct shell_s {
 		int status;
+		int exit_status;
 		int my_fork;
 		char *buffer;
 		char **env;

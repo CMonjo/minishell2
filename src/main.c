@@ -13,7 +13,9 @@ void my_exec(shell_t *shell)
 	if (shell->my_fork != 0) {
 		wait(&(shell->my_fork));
 		shell->my_fork = WTERMSIG(shell->my_fork);
+		shell->exit_status = WEXITSTATUS(shell->my_fork);
 	} else {
+		printf("[%d]\n", shell->exit_status);
 		if (execve(shell->path_bin, shell->command, shell->env) == -1)
 			exit(1);
 	}
@@ -45,30 +47,20 @@ int main(int ac, char **av, char **new_env)
 {
 	shell_t *shell = malloc(sizeof(shell_t));
 	nenv_t *nenv = malloc(sizeof(nenv_t));
-	int my_exit = 0;
 
-	size_t read = 0;
-	int fd = 0;
-
-	shell->filepath = NULL;
-	shell->buffer = NULL;
-	fd = getline(&shell->buffer, &read, stdin);
-	if (fd == -1)
-		return (1);
-	printf("IN -> [%s]\n", shell->buffer);
-	// (void)ac;
-	// (void)av;
-	// shell->my_fork = 0;
-	// shell->status = 256;
-	// while (shell->status == 256) {
-	// 	if (init_env(shell, new_env) == 1)
-	// 		break;
-	// 	disp_prompt();
-	// 	get_env(shell, nenv);
-	// 	if (read_input(shell, nenv) == 1)
-	// 		break;
-	// }
-	// my_exit = WEXITSTATUS(shell->my_fork);
-	// free_shell(shell, nenv);
-	return (my_exit);
+	(void)ac;
+	(void)av;
+	shell->exit_status = 0;
+	shell->my_fork = 0;
+	shell->status = 256;
+	while (shell->status == 256) {
+		if (init_env(shell, new_env) == 1)
+			break;
+		disp_prompt();
+		get_env(shell, nenv);
+		if (read_input(shell, nenv) == 1)
+			break;
+	}
+	free_shell(shell, nenv);
+	return (shell->exit_status );
 }
