@@ -47,19 +47,28 @@ int main(int ac, char **av, char **new_env)
 	nenv_t *nenv = malloc(sizeof(nenv_t));
 	int my_exit = 0;
 
-	(void)ac;
-	(void)av;
-	shell->my_fork = 0;
-	shell->status = 256;
-	while (shell->status == 256) {
-		if (init_env(shell, new_env) == 1)
-			break;
-		disp_prompt();
-		get_env(shell, nenv);
-		if (read_input(shell, nenv) == 1)
-			break;
-	}
-	my_exit = WEXITSTATUS(shell->my_fork);
-	free_shell(shell, nenv);
+	size_t read = 0;
+	int fd = 0;
+
+	shell->filepath = NULL;
+	shell->buffer = NULL;
+	fd = getline(&shell->buffer, &read, stdin);
+	if (fd == -1)
+		return (1);
+	printf("%s\n", shell->buffer);
+	// (void)ac;
+	// (void)av;
+	// shell->my_fork = 0;
+	// shell->status = 256;
+	// while (shell->status == 256) {
+	// 	if (init_env(shell, new_env) == 1)
+	// 		break;
+	// 	disp_prompt();
+	// 	get_env(shell, nenv);
+	// 	if (read_input(shell, nenv) == 1)
+	// 		break;
+	// }
+	// my_exit = WEXITSTATUS(shell->my_fork);
+	// free_shell(shell, nenv);
 	return (my_exit);
 }
