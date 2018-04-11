@@ -17,6 +17,11 @@ SRC	=	my_strlen.c		\
 		my_strcmp.c		\
 		my_putstr.c		\
 		my_str_to_word_array.c	\
+		my_calloc.c		\
+		my_count_char.c		\
+		my_printf.c		\
+		my_streqstr.c		\
+		my_put_nbr.c		\
 		my_strcat.c
 
 OBJ	=	$(SRC:.c=.o)

@@ -1,66 +1,71 @@
 /*
 ** EPITECH PROJECT, 2017
-** my_str_to_word_array
+** task04
 ** File description:
-** Concat str
+** str to word array
 */
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
+#include <stdio.h>
+#include "tools.h"
 
-int how_many_words(char *str, char separator)
+int	my_str_split_fill(char **arr, int word, char *buff, int *buffi)
 {
-	int word = 1;
-	int i = 0;
-
-	for (;str[i] == separator; i++);
-	for (;str[i] != '\0'; i++) {
-		if (str[i] == separator && str[i + 1]
-			!= separator && str[i + 1] != '\0')
-			word++;
-	}
+	arr[word] = my_calloc(my_strlen(buff)+1);
+	for (int i = 0; arr[word] != NULL && i < my_strlen(buff); i++)
+		arr[word][i] = buff[i];
+	*buffi = 0;
+	word++;
 	return (word);
 }
 
-int count_word(char *str, char separator, int *total)
+void	my_str_split_addbuff(char *buff, char *str, int *buffi, int i)
 {
-	int k = 0;
-
-	for (; str[*total] == separator; (*total)++);
-	for (; str[*total] && str[*total] != separator; (*total)++, k++);
-	if (str[*total])
-		(*total)++;
-	return (k);
+	buff[*buffi] = str[i];
+	buff[*buffi+1] = '\0';
+	*buffi += 1;
 }
 
-char **fill_str(char **new_str, char *str, char separator)
+int	check_char(char *str, int i, char c, int *quotes)
 {
-	int y = 0;
-	int total = 0;
-
-	for (int x = 0, i = 0, word = 0; str[i] != '\0'; y++, x = 0) {
-		word = count_word(str, separator, &total);
-		new_str[y] = malloc(sizeof(char) * (word + 1));
-		word = 0;
-		for (; str[i] == separator; i++);
-		for (;str[i] && str[i] != separator;
-			new_str[y][x] = str[i], x++, i++);
-		if (str[i])
-			i++;
-		for (; str[i] == separator; i++);
-		new_str[y][x] = '\0';
+	if (str[i] == '\"') {
+		*quotes += 1;
+		return (1);
 	}
-	new_str[y] = NULL;
-	return (new_str);
+	if (str[i] == c && (str[i+1] == c || str[i+1] == '\0'))
+		return (1);
+	return (0);
 }
 
-char **my_str_to_word_array(char *str, char separator)
+int	check_onlyc(char *str, char c, char **arr)
 {
-	int nb_word = how_many_words(str, separator);
-	char **new_str;
+	int nb_char = my_count_char(str, c);
 
-	new_str = malloc(sizeof(char *) * (nb_word + 1));
-	new_str = fill_str(new_str, str, separator);
-	return (new_str);
+	if (my_strlen(str) == nb_char) {
+		arr[0] = my_calloc(1);
+	}
+	return (0);
+}
+
+char **my_str_to_word_array(char *str, char c)
+{
+	int nblines = my_count_char(str, c) + 1;
+	char **arr = (char**)malloc(sizeof(char*)*(nblines+1));
+	char	buff[my_strlen(str)+2];
+	int bufi = 0;
+	int word = 0;
+	int quot = 0;
+
+	for (int i = 0; str != NULL && i <= my_strlen(str); i++) {
+		if (check_char(str, i, c, &quot) || (bufi==0 && str[i]==c))
+			continue;
+		if ((str[i]!=c && str[i]!='\0') || quot % 2 == 1) {
+			my_str_split_addbuff(buff, str, &bufi, i);
+			continue;
+		}
+		word = my_str_split_fill(arr, word, buff, &bufi);
+	}
+	check_onlyc(str, c, arr);
+	arr[word] = NULL;
+	return (arr);
 }

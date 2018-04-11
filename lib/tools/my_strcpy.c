@@ -1,20 +1,23 @@
 /*
 ** EPITECH PROJECT, 2017
-** my_strcpy
+** task01
 ** File description:
-** Copies a string into another
+** my str copy
 */
 
-#include "main.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "tools.h"
 
-char *my_strcpy(char *dest, char const *src)
+char	*my_strcpy(char *dest, char const *src)
 {
-	int i = 0;
-
-	while (i <= my_strlen(src)) {
+	if (src == NULL)
+		return (dest);
+	if (dest == NULL)
+		dest = (char*)malloc(sizeof(char)*(my_strlen(src)+1));
+	for (int i = 0; src[i] != '\0'; i++) {
 		dest[i] = src[i];
-		i += 1;
+		dest[i+1] = '\0';
 	}
-	dest[i] = '\0';
 	return (dest);
 }

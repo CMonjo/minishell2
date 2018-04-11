@@ -56,7 +56,6 @@ int main(int ac, char **av, char **new_env)
 		if (read_input(shell, nenv) == 1)
 			break;
 	}
-	printf("nb %d\n", shell->status);
 	free_shell(shell, nenv);
 	return (shell->status);
 }
