@@ -27,7 +27,6 @@ $(NAME): $(OBJ)
 	make -C ./lib/tools/
 	make -C ./lib/list/
 	$(CC) $(OBJ) $(CFLAGS) $(LIB) -o $(NAME)
-	rm -f $(OBJ)
 
 clean:
 	rm -f $(OBJ)

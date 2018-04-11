@@ -20,6 +20,7 @@
 	#include "tools.h"
 	#include "shell.h"
 	void free_shell(shell_t *shell, nenv_t *nenv);
+	char *my_clear_str(char *str);
 	void disp_prompt(void);
 	void my_exec(shell_t *shell);
 	void check_command(shell_t *shell, nenv_t *nenv);

@@ -13,8 +13,10 @@ void my_exec(shell_t *shell)
 	if (shell->my_fork != 0) {
 		wait(&(shell->my_fork));
 		shell->my_fork = WTERMSIG(shell->my_fork);
-	} else
-		execve(shell->path_bin, shell->command, shell->env);
+	} else {
+		if (execve(shell->path_bin, shell->command, shell->env) == -1)
+			exit(1);
+	}
 	for (int k = 0; shell->command &&
 		shell->command[k]; free(shell->command[k]), k++);
 }
@@ -43,6 +45,7 @@ int main(int ac, char **av, char **new_env)
 {
 	shell_t *shell = malloc(sizeof(shell_t));
 	nenv_t *nenv = malloc(sizeof(nenv_t));
+	int my_exit = 0;
 
 	(void)ac;
 	(void)av;
@@ -56,6 +59,7 @@ int main(int ac, char **av, char **new_env)
 		if (read_input(shell, nenv) == 1)
 			break;
 	}
+	my_exit = WEXITSTATUS(shell->my_fork);
 	free_shell(shell, nenv);
-	return (shell->status);
+	return (my_exit);
 }

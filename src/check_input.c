@@ -70,6 +70,18 @@ int parse_command(shell_t *shell, nenv_t *nenv)
 	return (0);
 }
 
+int check_empty_line(char *str)
+{
+	str = replace_tab(str);
+	if (str[0] == '\n' || str[0] == '\0')
+		return (1);
+	for (int i = 0; str[i] == ' '; i++) {
+		if (str[i] == '\n' || str[i] == '\0')
+			return (1);
+	}
+	return (0);
+}
+
 int read_input(shell_t *shell, nenv_t *nenv)
 {
 	size_t read = 0;
@@ -82,7 +94,10 @@ int read_input(shell_t *shell, nenv_t *nenv)
 		return (1);
 	if (shell->buffer[fd - 1] == '\n')
 		shell->buffer[fd - 1] = '\0';
-	if (shell->buffer[0] != '\0') {
+	printf("line %d\n", check_empty_line(shell->buffer));
+	if (shell->buffer[0] != '\0' || check_empty_line(shell->buffer) == 0) {
+		printf("rentre\n");
+		shell->buffer = replace_tab(shell->buffer);
 		shell->command = my_str_to_word_array(shell->buffer, ' ');
 		parse_command(shell, nenv);
 	}
