@@ -55,7 +55,7 @@ int main(int ac, char **av, char **new_env)
 	fd = getline(&shell->buffer, &read, stdin);
 	if (fd == -1)
 		return (1);
-	printf("%s\n", shell->buffer);
+	printf("IN -> [%s]\n", shell->buffer);
 	// (void)ac;
 	// (void)av;
 	// shell->my_fork = 0;
