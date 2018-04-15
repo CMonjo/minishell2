@@ -9,16 +9,12 @@
 	#define MAIN_H_
 	#include <stdio.h>
 	#include <unistd.h>
-	#include <stdarg.h>
 	#include <stdlib.h>
-	#include <sys/types.h>
 	#include <sys/wait.h>
 	#include <sys/stat.h>
-	#include <dirent.h>
-	#include <time.h>
-	#include <fcntl.h>
 	#include "tools.h"
 	#include "shell.h"
+
 	void free_shell(shell_t *shell, nenv_t *nenv);
 	char *my_clear_str(char *str);
 	void disp_prompt(void);
