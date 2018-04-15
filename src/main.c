@@ -15,7 +15,6 @@ void my_exec(shell_t *shell)
 		shell->my_fork = WTERMSIG(shell->my_fork);
 		shell->exit_status = WEXITSTATUS(shell->my_fork);
 	} else {
-		printf("[%d]\n", shell->exit_status);
 		if (execve(shell->path_bin, shell->command, shell->env) == -1)
 			exit(1);
 	}

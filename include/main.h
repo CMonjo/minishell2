@@ -35,4 +35,5 @@
 	int read_command(shell_t *shell, nenv_t *nenv);
 	void display_env(shell_t *shell);
 	void check_cd(shell_t *shell, nenv_t *nenv);
+	int check_empty_line(char *str);
 #endif

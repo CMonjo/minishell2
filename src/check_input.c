@@ -70,21 +70,6 @@ int parse_command(shell_t *shell, nenv_t *nenv)
 	return (0);
 }
 
-int check_empty_line(char *str)
-{
-	int i = 0;
-
-	str = replace_tab(str);
-	if (str[0] == '\n' || str[0] == '\0')
-		return (1);
-	while (str[i] == ' ' ) {
-		i++;
-		if (str[i] == '\n' || str[i] == '\0')
-			return (1);
-	}
-	return (0);
-}
-
 int read_input(shell_t *shell, nenv_t *nenv)
 {
 	size_t read = 0;
