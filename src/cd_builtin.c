@@ -8,9 +8,9 @@
 #include "main.h"
 
 
-void cd_deplacement_error(shell_t *shell, struct stat *statt)
+void cd_deplacement_error(shell_t *shell, struct stat *my_stat)
 {
-	if (S_ISDIR(statt->st_mode) == 1) {
+	if (S_ISDIR(my_stat->st_mode) == 1) {
 		if (chdir(shell->command[1]) == -1) {
 			write(2, shell->command[1],
 				my_strlen(shell->command[1]));
@@ -24,11 +24,11 @@ void cd_deplacement_error(shell_t *shell, struct stat *statt)
 
 void cd_deplacement(shell_t *shell)
 {
-	struct stat statt;
+	struct stat my_stat;
 
-	stat(shell->command[1], &statt);
+	stat(shell->command[1], &my_stat);
 	if (access(shell->command[1], F_OK) == 0)
-		cd_deplacement_error(shell, &statt);
+		cd_deplacement_error(shell, &my_stat);
 	else {
 		write(2, shell->command[1], my_strlen(shell->command[1]));
 		write(2, ": No such file or directory.\n", 29);
