@@ -1,7 +1,7 @@
-# minishell1
+# minishell2
 
 
-Epitech's minishell1 project in C language. 
+Epitech's minishell2 project in C language. 
 
 
 For this project it's necessary to reproduce a Shell with Linux command management. We had to copy tcsh who is a Unix shell based on and compatible with the C.
